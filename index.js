@@ -1,9 +1,12 @@
 require('dotenv').config()
+const consts = require('./const')
 const TelegramBot = require('node-telegram-bot-api')
 
 bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true})
 
 bot.on('message', async msg => {
+
+    console.log(msg)
 
     const messageID = msg.message_id
 
@@ -21,6 +24,18 @@ bot.on('message', async msg => {
 
     const text = msg.text
 
-    await bot.sendMessage(chatID, text)
+    if (text === consts.banCommand+'@MyTestFeatureBot') {
+        await bot.restrictChatMember(chatID, msg.reply_to_message.from.id, {
+            can_send_messages: false,
+            can_send_media_messages: false,
+            can_send_polls: false,
+            can_send_other_messages: false,
+            can_add_web_page_previews: false,
+            can_change_info: false,
+            can_invite_users: false,
+            can_pin_messages: false
+        }, Date.now()/1000 + 60)
+        console.log('Banned')
+    }
 
 })
