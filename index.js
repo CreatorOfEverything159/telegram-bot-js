@@ -4,7 +4,7 @@ const TelegramBot = require('node-telegram-bot-api')
 
 bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true})
 
-bot.on('message', async msg => {
+bot.on('message', msg => {
 
     console.log(msg)
 
@@ -25,7 +25,7 @@ bot.on('message', async msg => {
     const text = msg.text
 
     if (text === consts.banCommand+'@MyTestFeatureBot') {
-        await bot.restrictChatMember(chatID, msg.reply_to_message.from.id, {
+        bot.restrictChatMember(chatID, msg.reply_to_message.from.id, {
             can_send_messages: false,
             can_send_media_messages: false,
             can_send_polls: false,
@@ -33,9 +33,9 @@ bot.on('message', async msg => {
             can_add_web_page_previews: false,
             can_change_info: false,
             can_invite_users: false,
-            can_pin_messages: false
-        }, Date.now()/1000 + 60)
-        console.log('Banned')
+            can_pin_messages: false,
+            until_date: Date.now()/1000 + 60
+        })
     }
 
 })
