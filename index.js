@@ -5,7 +5,7 @@ const TelegramBot = require('node-telegram-bot-api')
 const botName = '@MyTestFeatureBot'
 
 bot.setMyCommands([
-    { command: consts.banCommand, description: "Забанить к хуям", },
+    { command: consts.banCommand, description: "Забанить на минутку", },
 ])
 
 bot = new TelegramBot(process.env.BOT_TOKEN, {polling: true})
