@@ -14,7 +14,8 @@ bot.on('message', async msg => {
     const text = msg.text
 
     if (text === consts.banCommand + consts.botName) {
-        let banningPerson = msg.reply_to_message.from.id
+        let banningPersonID = msg.reply_to_message.from.id
+        let banningPerson = msg.reply_to_message.form.username
         let random = Math.floor(Math.random() * 2)
         let status = await bot.getChatMember(chatID, userID).then(res => {
             return res.status
@@ -24,7 +25,7 @@ bot.on('message', async msg => {
             banningPerson = userID
         }
 
-        await bot.restrictChatMember(chatID, banningPerson, {
+        await bot.restrictChatMember(chatID, banningPersonID, {
             can_send_messages: false,
             can_send_media_messages: false,
             can_send_polls: false,
@@ -35,6 +36,8 @@ bot.on('message', async msg => {
             can_pin_messages: false,
             until_date: Date.now() / 1000 + 60
         })
+
+        await bot.sendMessage(chatID, `Забанен: @${banningPerson}`)
     }
 
 })
