@@ -39,7 +39,7 @@ bot.on('message', async msg => {
             until_date: Date.now() / 1000 + 60
         })
 
-        await bot.sendMessage(chatID, `Забанен: ${banningPersonName}`)
+        await bot.sendMessage(chatID, `Забанен: @${banningPersonName}`)
     }
 
 })
