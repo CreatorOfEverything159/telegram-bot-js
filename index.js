@@ -21,15 +21,16 @@ bot.on('message', async msg => {
         let banningPersonName = msg.reply_to_message.from.username
         let random = Math.floor(Math.random() * 2)
         let banTime = 60
+
         let status = await bot.getChatMember(chatID, userID).then(res => {
             return res.status
         })
-
         let banningPerson = await bot.getChatMember(chatID, msg.reply_to_message.from.id).then(res => {
             return res.status
         })
 
-        if ((status === 'member' || status === 'restricted') && (banningPerson === 'creator' || banningPerson === 'admin')) {
+        if ((status === 'member' || status === 'restricted')
+            && (banningPerson === 'creator' || banningPerson === 'admin')) {
             banningPersonID = userID
             banningPersonName = userName
             banTime = 300
@@ -51,6 +52,33 @@ bot.on('message', async msg => {
         })
 
         await bot.sendMessage(chatID, `Забанен: @${banningPersonName} на ${banTime}сек`)
+    }
+
+    if (text.includes(`${consts.adminBanCommand + consts.botName}`)) {
+        let banTime = text.slice(' ')[1]
+        let banningPersonID = msg.reply_to_message.from.id
+        let banningPersonName = msg.reply_to_message.from.username
+        let status = await bot.getChatMember(chatID, userID).then(res => {
+            return res.status
+        })
+
+        if (status === 'admin' || status === 'creator') {
+            await bot.restrictChatMember(chatID, banningPersonID, {
+                can_send_messages: false,
+                can_send_media_messages: false,
+                can_send_polls: false,
+                can_send_other_messages: false,
+                can_add_web_page_previews: false,
+                can_change_info: false,
+                can_invite_users: false,
+                can_pin_messages: false,
+                until_date: Date.now() / 1000 + 60 * banTime
+            })
+
+            await bot.sendMessage(chatID, `Забанен: @${banningPersonName} на ${banTime}мин от имени админа`)
+        } else {
+            await bot.sendMessage(chatID, `Не забанен по причине: банил лох`)
+        }
     }
 
 })
