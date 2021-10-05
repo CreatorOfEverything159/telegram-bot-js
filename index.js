@@ -83,4 +83,22 @@ bot.on('message', async msg => {
         }
     }
 
+    if (text === consts.unBanCommand + consts.botName) {
+        let unBanningPersonID = msg.reply_to_message.from.id
+        let unBanningPersonName = msg.reply_to_message.from.username
+
+        await bot.restrictChatMember(chatID, unBanningPersonID, {
+            can_send_messages: true,
+            can_send_media_messages: true,
+            can_send_polls: true,
+            can_send_other_messages: true,
+            can_add_web_page_previews: true,
+            can_change_info: true,
+            can_invite_users: true,
+            can_pin_messages: true,
+        })
+
+        await bot.sendMessage(chatID, `Разбанен: @${unBanningPersonName}`)
+    }
+
 })
