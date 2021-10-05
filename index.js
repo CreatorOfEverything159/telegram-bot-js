@@ -55,7 +55,9 @@ bot.on('message', async msg => {
     }
 
     if (text.includes(`${consts.adminBanCommand + consts.botName}`)) {
-        let banTime = text.slice(' ')[1]
+        let banTime = +text.split(' ')[1]
+        console.log(banTime)
+
         let banningPersonID = msg.reply_to_message.from.id
         let banningPersonName = msg.reply_to_message.from.username
         let status = await bot.getChatMember(chatID, userID).then(res => {
@@ -72,7 +74,7 @@ bot.on('message', async msg => {
                 can_change_info: false,
                 can_invite_users: false,
                 can_pin_messages: false,
-                until_date: Date.now() / 1000 + 60 * banTime
+                until_date: Date.now() / 1000 + (60 * banTime)
             })
 
             await bot.sendMessage(chatID, `Забанен: @${banningPersonName} на ${banTime}мин от имени админа`)
