@@ -101,4 +101,8 @@ bot.on('message', async msg => {
         await bot.sendMessage(chatID, `Разбанен: @${unBanningPersonName}`)
     }
 
+    if (text.toLowerCase() === 'да') {
+        await bot.sendMessage(chatID, 'Пизда!')
+    }
+
 })
