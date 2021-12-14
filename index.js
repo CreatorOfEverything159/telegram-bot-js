@@ -52,6 +52,7 @@ bot.on('message', async msg => {
         })
 
         await bot.sendMessage(chatID, `Забанен: @${banningPersonName} на ${banTime}сек`)
+        await bot.sendMessage(chatID, `Нахера ты это делаешь идиот, и так кринжа хватает`)
     }
 
     if (text.includes(`${consts.adminBanCommand + consts.botName}`)) {
@@ -77,7 +78,8 @@ bot.on('message', async msg => {
                 until_date: Date.now() / 1000 + (60 * banTime)
             })
 
-            await bot.sendMessage(chatID, `Забанен: @${banningPersonName} на ${banTime}мин от имени админа`)
+            await bot.sendMessage(chatID, `Забанен: @${banningPersonName} нахер на ${banTime}мин от имени папаши`)
+            await bot.sendMessage(chatID, `Ебаный ты пидорас, еще раз так сделаешь, обоссу`)
         } else {
             await bot.sendMessage(chatID, `Не забанен по причине: банил лох`)
         }
@@ -99,6 +101,7 @@ bot.on('message', async msg => {
         })
 
         await bot.sendMessage(chatID, `Разбанен: @${unBanningPersonName}`)
+        await bot.sendMessage(chatID, `Больше так не делай`)
     }
 
     if (text.toLowerCase() === 'да') {
