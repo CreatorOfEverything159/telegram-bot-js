@@ -105,4 +105,8 @@ bot.on('message', async msg => {
         await bot.sendMessage(chatID, 'Пизда!')
     }
 
+    if (text.toLowerCase() === 'манда') {
+        await bot.sendMessage(chatID, 'Сам ты нахуй манда иди нахуй деб!')
+    }
+
 })
